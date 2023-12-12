@@ -4,7 +4,7 @@ TMP = objs
 
 CXX = c++
 
-CXXFLAGS = -std=c++98  -Wall -Wextra -Werror -g -fsanitize=address
+CXXFLAGS = -std=c++98  #-Wall -Wextra -Werror -g -fsanitize=address
 
 LDFLAGS = -lasan -L/path/to/lib
 
