@@ -21,8 +21,9 @@ PmergeMe<T>::PmergeMe()
 }
 
 template <typename T>
-PmergeMe<T>::PmergeMe(const std::vector<int> &cont) /* : _cont(cont) */
-{
+PmergeMe<T>::PmergeMe(const std::vector<int> &cont) /* : _cont(cont) */ // TO DO
+    (void)cont;
+    // std::cout << "lalala\n";
 }
 
 template <typename T>
@@ -37,20 +38,10 @@ PmergeMe<T>::~PmergeMe()
 
 }
 
-// template <typename T>
-// PmergeMe& PmergeMe<T>::operator=(const  PmergeMe& obj)
-// {
-//     if (this != &obj)
-//     {
-//         this->_cont = obj._cont;
-//     }
-//     return(*this);
-// }
-
 template <typename T>
 void print(T &A)
 {
-    for (int i = 0; i < A.size(); ++i)
+    for (size_t i = 0; i < A.size(); ++i)
     {
         std::cout << A[i] << " ";
     }
@@ -102,7 +93,6 @@ void Merge(T &m_vec, int start, int mid, int end)
     }
     while (j <= end)
     {
-        // std::cout << "m_vec[j] = " << m_vec[j] << "\n";
         tmp.push_back(m_vec[j]);
         ++j;
     }
@@ -119,7 +109,6 @@ void MergeInsert(T &A, int p, int r)
     // std::cout << __PRETTY_FUNCTION__ << std::endl;
     if (r - p > K)
     {
-        // int q = (p + r) / 2;
         int q = (r - p) / 2 + p;
         MergeInsert(A, p, q);
         MergeInsert(A, q + 1, r);

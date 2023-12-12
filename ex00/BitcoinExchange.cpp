@@ -10,7 +10,7 @@ BitcoinExchange::BitcoinExchange()
 
 BitcoinExchange::BitcoinExchange(const BitcoinExchange& obj)
 {
-    
+    this->_map = obj._map;
 }
 
 BitcoinExchange::~BitcoinExchange()
@@ -20,6 +20,10 @@ BitcoinExchange::~BitcoinExchange()
 
 BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange& obj)
 {
+    if (this != &obj)
+    {
+        this->_map = obj._map;
+    }
     return (*this);
 }
 
@@ -44,7 +48,6 @@ void BitcoinExchange::read_file()
                 if ((pos = str.find(",")) != std::string::npos)
                 {
                     day = str.substr(0, pos);
-                    // val = strtod(str.erase(0,pos+del.length()).c_str(), NULL);
                     this->_map[day] = strtod(str.substr(pos+1).c_str(), NULL);
                 }
             }
@@ -58,11 +61,8 @@ void BitcoinExchange::read_file()
     fin.close();
 }
 
-// static bool isSpace(int c) {
-//     return (!std::isspace(c));
-// }
-
-inline std::string &strTrim(std::string &str) {
+inline std::string &strTrim(std::string &str) 
+{
     str.erase(0, str.find_first_not_of(" "));
     int pos = str.find_last_not_of(" ") + 1;
     str.erase(pos, str.size() - pos);
@@ -95,25 +95,29 @@ void BitcoinExchange::read_input(const std::string& file)
                     val = strtod(tmp.c_str(), &ptr);
                     try
                     {
-                        std::cout << "-ptr " << (int)*ptr  << std::endl;
-                        if (!std::isspace(*ptr))
+                        if (!std::isspace(*ptr) && ptr[0] != '\0')
                         {
-                        printf("ptr = %d\n", *ptr);
-                            throw std::runtime_error("invalid val");
+                            throw std::runtime_error("Error: bad input.");
                         }
                         if (val < 1 || val > 1000)
                         {
-                            throw std::runtime_error("out of range");
+                            if (val == 0)
+                                throw std::runtime_error("Error: bad input");
+                            if (val < 0)
+                                throw std::runtime_error("Error: not a positive number");
+                            else
+                                throw std::runtime_error("Error: too large a number");
+
                         }
                         strTrim(day);
-                        // std::cout << "day = " << day << "$" << std::endl;                        // remove space
                         valid_str(day);
                     }
                     catch(const std::exception& e)
                     {
-                        std::cerr << day << " -> " << e.what() << '\n';
+                        std::cerr << e.what() << std::endl;
                         continue;
                     }
+
                     std::map<std::string, double>::iterator it = this->_map.lower_bound(day);
 
                     if (it != this->_map.end())
@@ -122,11 +126,12 @@ void BitcoinExchange::read_input(const std::string& file)
                         std::cout << day << " => " << val << " = " << money << std::endl;
                     }
                     else
-                        std::cout << day << " not found\n";
+                        std::cout << day << " not found" << std::endl;
                 }
                 else
                 {
-                    std::cout << "Error bad input => " << str << std::endl;
+                    // std::cout << "val error = " << val << std::endl;
+                    std::cout << "Error: bad input => " << str << std::endl;
                 }
             }
         }
@@ -135,7 +140,6 @@ void BitcoinExchange::read_input(const std::string& file)
     }
     else
         throw std::runtime_error("can not open file");
-    // print();
     fin.close();
 }
 
@@ -146,43 +150,9 @@ void BitcoinExchange::print()
     for(std::map<std::string, double>::iterator it = _map.begin();
         it != _map.end(); ++it)
     {
-        std::cout << "|"<< it->first << "|" << " " << it->second<< "\n";
+        std::cout << "|"<< it->first << "|" << " " << it->second << std::endl;
     }
 }
-
-/* char *ft_strtok(char *str, char c)
-{
-    static char *bufer = str;
-
-    if (str == NULL && bufer == NULL) 
-    {
-        return(NULL);
-    }
-
-    int i = 0;
-
-    while (bufer[i])
-    {
-        if (bufer[i] == c)
-        {
-            while (bufer[i] == c)
-            {
-                bufer[i++] = '/0';
-            }
-            break ;
-        }
-        ++i;
-    }
-    if (bufer[i] == '/0')
-    {
-        bufer = NULL;
-    }
-    bufer += i;
-    return (bufer - i);
-} */
-
-
-
 bool is_digit(const std::string &str)
 {
     int i = 0;
@@ -200,22 +170,8 @@ bool is_leap_year(int year)
     return ((year % 400 == 0 || year % 100 != 0) && (year % 4 == 0));
 }
 
-// bool is_leap_year(int year) 
-// {
-//   if (year % 4 != 0) {
-//     return false;
-//   } else if (year % 400 == 0) {
-//     return true;
-//   } else if (year % 100 == 0) {
-//     return false;
-//   } else {
-//     return true;
-//   }
-// }
-
 bool func(int year, int month, int day)
 {
-    // std::cout << "func\n";
     if (day > 31)
     {
         return (0);
@@ -223,13 +179,11 @@ bool func(int year, int month, int day)
 
     if (!is_leap_year(year) && (month == 2) && (day > 28))
     {
-        // std::cout << "petrvar\n";
         return (0);
     }
 
     if (is_leap_year(year) && month == 2 && day > 29)
     {
-        // std::cout << "petrvar_28\n";
         return (0);
     }
 
@@ -241,12 +195,9 @@ bool func(int year, int month, int day)
     return (1);
 }
 
-
 void BitcoinExchange::valid_str(std::string str)
 {
     str += "-";
-    int count = 0;
-    size_t pos = 0;
     char *c_str = (char *)str.c_str();
     std::string year;
     std::string month;
@@ -255,7 +206,7 @@ void BitcoinExchange::valid_str(std::string str)
     char *ptr = strtok(c_str, "-");
 
     if (ptr == NULL)
-        throw std::runtime_error("bad input tari");
+        throw std::runtime_error("bad input year");
     
     year = ptr;
 
@@ -287,5 +238,5 @@ void BitcoinExchange::valid_str(std::string str)
     ptr = strtok(NULL, "-");
 
     if (ptr != NULL)
-        throw std::runtime_error("bad input ayl");
+        throw std::runtime_error("bad input");
 }

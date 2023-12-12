@@ -14,9 +14,7 @@ class BitcoinExchange
         void read_input(const std::string& file);
         void read_file();
         void print();
-        void valid_str(std::string str);
     private:
+        void valid_str(std::string str);
         std::map<std::string, double, std::greater<std::string> > _map;
 };
-
-
