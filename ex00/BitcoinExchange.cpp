@@ -27,6 +27,9 @@ BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange& obj)
     return (*this);
 }
 
+
+
+
 void BitcoinExchange::read_file()
 {
     std::ifstream fin;
@@ -53,10 +56,10 @@ void BitcoinExchange::read_file()
             }
         }
         else
-            throw std::runtime_error("empty file");
+            throw std::runtime_error("Empty file");
     }
     else
-        throw std::runtime_error("can not open file");
+        throw std::runtime_error("Can not open file");
 
     fin.close();
 }
@@ -97,7 +100,7 @@ void BitcoinExchange::read_input(const std::string& file)
                     {
                         if (!std::isspace(*ptr) && ptr[0] != '\0')
                         {
-                            throw std::runtime_error("Error: bad input.");
+                            throw std::runtime_error("Error: bad input");
                         }
                         if (val < 1 || val > 1000)
                         {
@@ -122,25 +125,25 @@ void BitcoinExchange::read_input(const std::string& file)
 
                     if (it != this->_map.end() && strtod(day.c_str(), NULL) >= 2009)
                     {
+                        std::cout << "day = " << day << "\n";
                         double money = it->second * val;
                         std::cout << day << " => " << val << " = " << money << std::endl;
         
                     }
                     else
-                        std::cout << day << " not found" << std::endl;
+                        std::cout << day << " not found" << std::endl; // TO DO angleren-> es tvin btc chkar
                 }
                 else
                 {
-                    // std::cout << "val error = " << val << std::endl;
                     std::cout << "Error: bad input => " << str << std::endl;
                 }
             }
         }
         else
-            throw std::runtime_error("empty file");
+            throw std::runtime_error("Error: empty file");
     }
     else
-        throw std::runtime_error("can not open file");
+        throw std::runtime_error("Error: can not open file");
     fin.close();
 }
 
@@ -207,37 +210,37 @@ void BitcoinExchange::valid_str(std::string str)
     char *ptr = strtok(c_str, "-");
 
     if (ptr == NULL)
-        throw std::runtime_error("bad input year");
+        throw std::runtime_error("Error: bad input year");
     
     year = ptr;
 
     if (!is_digit(year))
     {
-        throw std::runtime_error("bad input year");
+        throw std::runtime_error("Error: bad input year");
     }
 
     ptr = strtok(NULL, "-");
 
     if (ptr == NULL)
-        throw std::runtime_error("bad input year");
+        throw std::runtime_error("Error: bad input year");
     
     month = ptr;
 
     if (month.size() != 2 || !is_digit(month) || (atoi(month.c_str()) > 12))
-        throw std::runtime_error("bad input month");
+        throw std::runtime_error("Error: bad input month");
     
     ptr = strtok(NULL, "-");
 
     if (ptr == NULL)
-        throw std::runtime_error("bad input month");
+        throw std::runtime_error("Error: bad input month");
     
     day = ptr;
 
     if ((day.size() != 2 || !is_digit(day)) || !func(atoi(year.c_str()), atoi(month.c_str()), atoi(day.c_str())))
-        throw std::runtime_error("bad input day");
+        throw std::runtime_error("Error: bad input day");
 
     ptr = strtok(NULL, "-");
 
     if (ptr != NULL)
-        throw std::runtime_error("bad input");
+        throw std::runtime_error("Error: bad input");
 }

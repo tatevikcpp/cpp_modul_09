@@ -27,7 +27,7 @@ long double get_currenet_time()
     return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 }
 
-int main(int c, char **v)
+int main(int c, char **v) //TO DO try-y if im mej, te hakaraky ?
 {
     try
     {
@@ -42,7 +42,7 @@ int main(int c, char **v)
                 int a = atoi(v[i]);
                 if (a < 0)
                 {
-                    throw std::invalid_argument("error");
+                    throw std::invalid_argument("Error: invalid argument");
                 }
                 vec.push_back(a);
                 dec.push_back(a);
@@ -66,55 +66,11 @@ int main(int c, char **v)
         }
         else
         {
-            std::cout << "error argument qanak" << std::endl; // TO DO
+            std::cout << "Error: invalid argument" << std::endl;
         }
     }
     catch(const std::exception& e)
     {
-        std::cerr << e.what() << '\n';
+        std::cerr << e.what() << std::endl;
     }
-    
-
-
-
-
-
-    // if (c > 2)
-    // {
-    //     std::vector<int> vec;
-    //     std::deque<int> dec;
-
-    //     for (int i = 1; i < c; i++)
-    //     {
-    //         checkDigit(v);
-    //         int a = atoi(v[i]);
-    //         if (a < 0)
-    //         {
-    //             throw std::invalid_argument("error");
-    //         }
-    //         vec.push_back(a);
-    //         dec.push_back(a);
-    //     }
-    //     std::cout << "Before: " << std::endl;
-    //     print(vec);
-    //     std::cout << std::endl;
-    //     double start_time_vec = get_currenet_time();
-    //     MergeInsert(vec, 0, vec.size() - 1);
-    //     double end_time_vec = get_currenet_time();
-
-    //     double start_time_dec = get_currenet_time();
-    //     MergeInsert(dec, 0, dec.size() - 1);
-    //     double end_time_dec = get_currenet_time();
-
-    //     std::cout << "Aftr: " << std::endl;
-    //     print(vec);
-    //     std::cout << std::endl;
-    //     std::cout << "Time to process a range of " << dec.size() << " elements with std::deque  : " << end_time_dec - start_time_dec  << " us" << std::endl;
-    //     std::cout << "Time to process a range of " << vec.size() << " elements with std::vector : " << end_time_vec - start_time_vec  << " us" << std::endl;
-    // }
-    // else
-    // {
-    //     std::cout << "error argument qanak" << std::endl; // TO DO
-    // }
-    // return 0;
 }

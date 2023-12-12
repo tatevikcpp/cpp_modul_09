@@ -1,12 +1,10 @@
-NAME =  btc
+NAME = rpn
 
 TMP = objs
 
 CXX = c++
 
-CXXFLAGS = -std=c++98  -Wall -Wextra -Werror -g -fsanitize=address
-
-LDFLAGS = -lasan -L/path/to/lib
+CXXFLAGS = -std=c++98 -Wall -Wextra -Werror -g -fsanitize=address
 
 SRCS = $(wildcard *.cpp)
 
