@@ -1,6 +1,6 @@
 #include "BitcoinExchange.hpp"
 
-int main(int c, char **v) //TO DO  ete mec u poqr taretver en  ? 2975  1975 ? 
+int main(int c, char **v)
 {
     if (c == 2)
     {

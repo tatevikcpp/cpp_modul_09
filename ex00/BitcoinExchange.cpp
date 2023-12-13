@@ -93,7 +93,6 @@ void BitcoinExchange::read_input(const std::string& file)
                 {
                     day = str.substr(0, pos);
                     char *ptr;
-                    // strTrim(0,pos + 1);
                     std::string tmp = str.substr(pos + 1);
                     val = strtod(tmp.c_str(), &ptr);
                     try
@@ -130,7 +129,7 @@ void BitcoinExchange::read_input(const std::string& file)
         
                     }
                     else
-                        std::cout << day << " not found" << std::endl; // TO DO angleren-> es tvin btc chkar
+                        std::cout << day << " not found" << std::endl;
                 }
                 else
                 {
@@ -175,7 +174,7 @@ bool is_leap_year(int year)
 
 bool func(int year, int month, int day)
 {
-    if (day > 31)
+    if (day > 31 || day <= 0)
     {
         return (0);
     }
@@ -234,6 +233,7 @@ void BitcoinExchange::valid_str(std::string str)
         throw std::runtime_error("Error: bad input month");
     
     day = ptr;
+
 
     if ((day.size() != 2 || !is_digit(day)) || !func(atoi(year.c_str()), atoi(month.c_str()), atoi(day.c_str())))
         throw std::runtime_error("Error: bad input day");

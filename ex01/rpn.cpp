@@ -2,6 +2,22 @@
 #include <cstdlib> //atoi / atof
 #include "rpn.hpp"
 
+RPN::RPN() {}
+RPN::~RPN() {}
+
+RPN::RPN(const RPN& obj)
+{
+    this->_stack = obj._stack;
+}
+
+RPN& RPN::operator=(const RPN& obj)
+{
+    if (this != &obj)
+        this->_stack = obj._stack;
+    return (*this);
+}
+
+
 bool is_operator(char c)
 {
     return (c == '+' || c == '-' || c == '/' || c == '*');
@@ -27,7 +43,6 @@ double math_functions(char c, double a, double b)
     }
     throw std::runtime_error("error");
 }
-
 
 double RPN::func(const std::string& str)
 {
