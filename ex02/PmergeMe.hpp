@@ -4,46 +4,14 @@
 #include <deque>
 
 const int K = 5;
-
-template <typename T>
 class PmergeMe
 {
     public:
         PmergeMe();
         PmergeMe(const PmergeMe &obj);
-        // PmergeMe(const std::vector<int> &obj);
         ~PmergeMe();
         PmergeMe& operator=(const PmergeMe& obj);
 };
-
-template <typename T>
-PmergeMe<T>::PmergeMe()
-{
-}
-
-// template <typename T>
-// PmergeMe<T>::PmergeMe(const std::vector<int> &cont) : _cont(cont) // TO DO ha vor ?
-// {
-
-// }
-
-template <typename T>
-PmergeMe<T>::PmergeMe(const PmergeMe &obj)
-{
-    this->_cont = obj._cont;
-}
-
-template <typename T>
-PmergeMe<T>::~PmergeMe()
-{
-
-}
-
-PmergeMe& PmergeMe<T>::operator=(const PmergeMe& obj)
-{
-    return (*this);
-}
-
 
 template <typename T>
 void print(T &A)

@@ -11,7 +11,7 @@ void checkDigit(char **str)
         {
             if (!isdigit(str[i][j]))
             {
-                throw std::invalid_argument("Error");
+                throw std::invalid_argument("Error: invalid argument");
             }
             j++;
         }
@@ -27,11 +27,11 @@ long double get_currenet_time()
     return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 }
 
-int main(int c, char **v) //TO DO try-y if im mej, te hakaraky ?
+int main(int c, char **v)
 {
-    try
+    if (c > 2)
     {
-       if (c > 2)
+        try
         {
             std::vector<int> vec;
             std::deque<int> dec;
@@ -64,13 +64,13 @@ int main(int c, char **v) //TO DO try-y if im mej, te hakaraky ?
             std::cout << "Time to process a range of " << dec.size() << " elements with std::deque  : " << end_time_dec - start_time_dec  << " us" << std::endl;
             std::cout << "Time to process a range of " << vec.size() << " elements with std::vector : " << end_time_vec - start_time_vec  << " us" << std::endl;
         }
-        else
+        catch(const std::exception& e)
         {
-            std::cout << "Error: invalid argument" << std::endl;
+            std::cerr << e.what() << std::endl;
         }
     }
-    catch(const std::exception& e)
+    else
     {
-        std::cerr << e.what() << std::endl;
+        std::cout << "Error: invalid argument" << std::endl;
     }
 }

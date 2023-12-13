@@ -123,9 +123,8 @@ void BitcoinExchange::read_input(const std::string& file)
 
                     std::map<std::string, double>::iterator it = this->_map.lower_bound(day);
 
-                    if (it != this->_map.end() && strtod(day.c_str(), NULL) >= 2009)
+                    if (it != this->_map.end() && strtod(day.c_str(), NULL) >= 2009 && strtod(day.c_str(), NULL) <= 2022)
                     {
-                        std::cout << "day = " << day << "\n";
                         double money = it->second * val;
                         std::cout << day << " => " << val << " = " << money << std::endl;
         
