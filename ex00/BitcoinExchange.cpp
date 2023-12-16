@@ -84,7 +84,7 @@ void BitcoinExchange::read_input(const std::string& file)
 
     if (fin.is_open())
     {
-        if (getline(fin, str))
+        if (getline(fin, str, '\n'))
         {
             while (!fin.eof())
             {
